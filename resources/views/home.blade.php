@@ -14,10 +14,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     
     <!-- Scripts -->
-    <link rel="preload" as="style" href="{{ mix('css/app.css') }}" />
-    <link rel="modulepreload" href="{{ mix('js/app.js') }}" />
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
-    <script type="module" src="{{ mix('js/app.js') }}"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
         body {

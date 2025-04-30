@@ -7,4 +7,9 @@ export default defineConfig({
         laravel(['resources/js/app.js']),
         react(),
     ],
+    esbuild: {
+        loader: 'jsx',
+        include: /resources\/js\/.*\.jsx?$/,
+        exclude: [],
+    },
 });
