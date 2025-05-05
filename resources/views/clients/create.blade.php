@@ -1,22 +1,22 @@
- @extends('layouts.app')
+@extends('layouts.app')
 
 @section('content')
 <style>
     body {
-        background: linear-gradient(135deg, #a0f1ea, #c3ddfd, #fff3b0);
+        background: linear-gradient(135deg, #f6d365, #fda085);
         background-size: 400% 400%;
         animation: gradient 15s ease infinite;
         font-family: 'Poppins', sans-serif;
         margin: 0;
         padding: 0;
     }
-
+    
     @keyframes gradient {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
     }
-
+    
     .container-center {
         min-height: 100vh;
         display: flex;
@@ -24,7 +24,7 @@
         justify-content: center;
         padding: 20px;
     }
-
+    
     .glass-card {
         background: rgba(255, 255, 255, 0.25);
         border-radius: 20px;
@@ -36,11 +36,11 @@
         max-width: 500px;
         transition: transform 0.3s ease;
     }
-
+    
     .glass-card:hover {
         transform: scale(1.02);
     }
-
+    
     .form-title {
         text-align: center;
         font-size: 2.2rem;
@@ -48,12 +48,12 @@
         margin-bottom: 30px;
         color: #2f3640;
     }
-
+    
     .form-label {
         font-weight: 500;
         color: #2c3e50;
     }
-
+    
     .form-control {
         background: transparent;
         border: none;
@@ -63,15 +63,15 @@
         font-weight: 500;
         padding-left: 0;
     }
-
+    
     .form-control:focus {
         border-color: #00a8ff;
         background-color: transparent;
         box-shadow: none;
     }
-
+    
     .btn-glow {
-        background: #fbc531;
+        background: #f0932b;
         color: white;
         font-weight: bold;
         border: none;
@@ -79,44 +79,51 @@
         padding: 10px 30px;
         transition: all 0.3s ease-in-out;
     }
-
+    
     .btn-glow:hover {
-        background: rgb(225, 169, 0);
-        box-shadow: 0 0 15px rgba(225, 202, 0, 0.6);
+        background: #e17055;
+        box-shadow: 0 0 15px rgba(241, 196, 15, 0.6);
         transform: scale(1.05);
+    }
+
+    .alert {
+        border-radius: 15px;
+        margin-bottom: 20px;
     }
 </style>
 
 <div class="container-center">
     <div class="glass-card">
-        <div class="form-title">Créer un Ticket</div> 
-        <form action="{{ url('/tickets') }}" method="POST">
+        <div class="form-title">Créer un Client</div>
+        
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        
+        <form action="{{ route('clients.store') }}" method="POST">
             @csrf
-
+            
             <div class="mb-4">
-                <label for="title" class="form-label">Titre</label>
-                <input type="text" name="title" id="title" class="form-control" required>
+                <label for="name" class="form-label">Nom du client</label>
+                <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
             </div>
-
-            <div class="mb-4">
-                <label for="description" class="form-label">Description</label>
-                <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
-            </div>
-
-            <div class="mb-4">
-                <label for="priority" class="form-label">Priorité</label>
-                <select name="priority" id="priority" class="form-control" required>
-                    <option value="low">Faible</option>
-                    <option value="medium">Moyenne</option>
-                    <option value="high">Élevée</option>
-                </select>
-            </div>
-
+            
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-glow">Soumettre</button>
+                <button type="submit" class="btn btn-glow">Créer le client</button>
             </div>
         </form>
     </div>
 </div>
-@endsection 
- 
+@endsection

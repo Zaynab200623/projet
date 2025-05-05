@@ -2,10 +2,34 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ClientController;
 
 Route::resource('tickets', TicketController::class);
 Route::patch('/tickets/{ticket}/close', [TicketController::class, 'close'])->name('tickets.close');
+
+Route::get('/tickets/export/pdf', [TicketController::class, 'exportPDF'])->name('tickets.export.pdf');
+
+// // Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+// // Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+
+Route::middleware(['auth'])->group(function () {
+    // Routes pour les clients
+    Route::get('/clients/create', [ClientController::class, 'create'])->name('clients.create');
+    Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
+    
+    // Routes pour les projets
+    Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+    
+    // Routes pour les tickets
+    Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
+    // Autres routes tickets...
+});
+
+
+
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 

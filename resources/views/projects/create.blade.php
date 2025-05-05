@@ -1,9 +1,9 @@
- @extends('layouts.app')
+@extends('layouts.app')
 
 @section('content')
 <style>
     body {
-        background: linear-gradient(135deg, #a0f1ea, #c3ddfd, #fff3b0);
+        background: linear-gradient(135deg, #f6d365, #fda085);
         background-size: 400% 400%;
         animation: gradient 15s ease infinite;
         font-family: 'Poppins', sans-serif;
@@ -71,7 +71,7 @@
     }
 
     .btn-glow {
-        background: #fbc531;
+        background: #f0932b;
         color: white;
         font-weight: bold;
         border: none;
@@ -81,35 +81,38 @@
     }
 
     .btn-glow:hover {
-        background: rgb(225, 169, 0);
-        box-shadow: 0 0 15px rgba(225, 202, 0, 0.6);
+        background: #e17055;
+        box-shadow: 0 0 15px rgba(241, 196, 15, 0.6);
         transform: scale(1.05);
     }
 </style>
 
 <div class="container-center">
     <div class="glass-card">
-        <div class="form-title">Créer un Ticket</div> 
-        <form action="{{ url('/tickets') }}" method="POST">
+        <div class="form-title">Créer un Projet</div>
+        @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+        <form action="{{ route('projects.store') }}" method="POST">
             @csrf
 
             <div class="mb-4">
-                <label for="title" class="form-label">Titre</label>
-                <input type="text" name="title" id="title" class="form-control" required>
+                <label for="name" class="form-label">Nom du projet</label>
+                <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
+
             </div>
 
             <div class="mb-4">
                 <label for="description" class="form-label">Description</label>
-                <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
-            </div>
+                <textarea name="description" id="description" class="form-control" rows="4" required>{{ old('description') }}</textarea>
 
-            <div class="mb-4">
-                <label for="priority" class="form-label">Priorité</label>
-                <select name="priority" id="priority" class="form-control" required>
-                    <option value="low">Faible</option>
-                    <option value="medium">Moyenne</option>
-                    <option value="high">Élevée</option>
-                </select>
             </div>
 
             <div class="d-flex justify-content-center">
@@ -118,5 +121,4 @@
         </form>
     </div>
 </div>
-@endsection 
- 
+@endsection

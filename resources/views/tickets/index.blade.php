@@ -3,7 +3,7 @@
    
     /* Container principal */
     .container {
-        margin-top: 10px;
+        margin-top: 5px;
         max-width: 1200px;
     }
 
@@ -294,6 +294,10 @@
     <!-- Bouton Créer un Ticket -->
     @auth
         <a href="{{ route('tickets.create') }}" class="btn btn-create mb-4">Créer un Ticket</a>
+        <a href="{{ route('projects.create') }}" class="btn btn-create mb-4 me-2">Créer un Projet</a>
+
+         <!-- Bouton Télécharger la liste des tickets -->
+    <a href="{{ route('tickets.export.pdf') }}" class="btn btn-vip mb-4 ms-2">Télécharger la liste en PDF</a>
     @endauth
 
     <!-- Message de succès -->
@@ -334,7 +338,7 @@
         @endif
     @else
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Attention!</strong> Vous devez être connecté pour voir vos tickets.
+            <strong>Attention!</strong> Vous devez être connecté pour voir ou créer vos tickets.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endauth

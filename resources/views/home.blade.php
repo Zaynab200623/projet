@@ -123,7 +123,7 @@
                             <p class="text-center">You are logged in!</p>
 
                             <div class="text-center">
-                                <a href="{{ url('/home') }}" class="btn btn-dashboard">
+                                <a href="{{ url('/') }}" class="btn btn-dashboard">
                                     Go to Home
                                 </a>
                             </div>

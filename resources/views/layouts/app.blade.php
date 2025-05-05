@@ -130,7 +130,7 @@
     <nav class="navbar navbar-expand-md shadow-sm custom-navbar">
     <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-    <img src="{{ asset('build/assets/images/logo.png') }}" alt="Logo" height="40" width="200" class="me-2">
+    <img src="{{ asset('storage/logo.png') }}" alt="Logo" height="40" width="200" class="me-2">
     </a>
 
         <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
