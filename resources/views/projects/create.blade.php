@@ -1,22 +1,16 @@
 @extends('layouts.app')
-
 @section('content')
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+    
     body {
-        background: linear-gradient(135deg, #f6d365, #fda085);
-        background-size: 400% 400%;
-        animation: gradient 15s ease infinite;
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Inter', sans-serif;
+        background-color: #f8f9fa;
         margin: 0;
         padding: 0;
+        color: #333;
     }
-
-    @keyframes gradient {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
+    
     .container-center {
         min-height: 100vh;
         display: flex;
@@ -24,99 +18,159 @@
         justify-content: center;
         padding: 20px;
     }
-
-    .glass-card {
-        background: rgba(255, 255, 255, 0.25);
-        border-radius: 20px;
+    
+    .form-card {
+        background-color: white;
+        border-radius: 12px;
         padding: 40px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
         width: 100%;
         max-width: 500px;
+        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
         transition: transform 0.3s ease;
     }
-
-    .glass-card:hover {
-        transform: scale(1.02);
-    }
-
+    
     .form-title {
         text-align: center;
-        font-size: 2.2rem;
-        font-weight: bold;
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
         margin-bottom: 30px;
-        color: #2f3640;
+        letter-spacing: -0.5px;
     }
-
+    
+    .form-group {
+        margin-bottom: 25px;
+    }
+    
     .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
         font-weight: 500;
-        color: #2c3e50;
+        color: #555;
     }
-
+    
     .form-control {
-        background: transparent;
-        border: none;
-        border-bottom: 2px solid #ccc;
-        border-radius: 0;
-        color: #34495e;
-        font-weight: 500;
-        padding-left: 0;
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #e1e4e8;
+        border-radius: 6px;
+        font-size: 15px;
+        color: #333;
+        transition: all 0.2s ease;
+        background-color: #fff;
     }
-
+    
     .form-control:focus {
-        border-color: #00a8ff;
-        background-color: transparent;
-        box-shadow: none;
+        border-color: #555;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
     }
-
-    .btn-glow {
-        background: #f0932b;
+    
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+    
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    
+    .btn-submit {
+        background-color: #333;
         color: white;
-        font-weight: bold;
         border: none;
-        border-radius: 25px;
-        padding: 10px 30px;
-        transition: all 0.3s ease-in-out;
+        border-radius: 6px;
+        padding: 12px 28px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
     }
-
-    .btn-glow:hover {
-        background: #e17055;
-        box-shadow: 0 0 15px rgba(241, 196, 15, 0.6);
-        transform: scale(1.05);
+    
+    .btn-submit:hover {
+        background-color: #222;
+        transform: translateY(-2px);
+    }
+    
+    .btn-submit:active {
+        transform: translateY(1px);
+    }
+    
+    .alert {
+        background-color: #fff8f8;
+        border-left: 3px solid #e74c3c;
+        padding: 12px 16px;
+        margin-bottom: 25px;
+        border-radius: 6px;
+    }
+    
+    .alert ul {
+        margin: 0;
+        padding-left: 16px;
+    }
+    
+    .alert li {
+        color: #e74c3c;
+        font-size: 14px;
+    }
+    
+    /* Simple underline animation for focus */
+    .input-wrapper {
+        position: relative;
+    }
+    
+    .input-wrapper::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background-color: #333;
+        transition: width 0.3s ease, left 0.3s ease;
+    }
+    
+    .input-wrapper:focus-within::after {
+        width: 100%;
+        left: 0;
     }
 </style>
 
 <div class="container-center">
-    <div class="glass-card">
+    <div class="form-card">
         <div class="form-title">Créer un Projet</div>
+        
         @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
+            <div class="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        
         <form action="{{ route('projects.store') }}" method="POST">
             @csrf
-
-            <div class="mb-4">
+            <div class="form-group">
                 <label for="name" class="form-label">Nom du projet</label>
-                <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
-
+                <div class="input-wrapper">
+                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
+                </div>
             </div>
-
-            <div class="mb-4">
+            
+            <div class="form-group">
                 <label for="description" class="form-label">Description</label>
-                <textarea name="description" id="description" class="form-control" rows="4" required>{{ old('description') }}</textarea>
-
+                <div class="input-wrapper">
+                    <textarea name="description" id="description" class="form-control" rows="4" required>{{ old('description') }}</textarea>
+                </div>
             </div>
-
-            <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-glow">Soumettre</button>
+            
+            <div class="btn-container">
+                <button type="submit" class="btn-submit">Soumettre</button>
             </div>
         </form>
     </div>

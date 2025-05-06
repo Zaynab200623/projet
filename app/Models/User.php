@@ -87,8 +87,5 @@ protected $casts = [
  * Relation avec le client
  * Dans votre structure, la relation est inverse - un user a un client
  */
-public function client()
-{
-    return $this->hasOne(Client::class);
-}
+
 }

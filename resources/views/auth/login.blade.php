@@ -2,21 +2,17 @@
 
 @section('content')
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+    
     body {
-        background: linear-gradient(135deg, #a0f1ea, #c3ddfd, #fff3b0);
-        background-size: 400% 400%;
-        animation: gradient 15s ease infinite;
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Inter', sans-serif;
+        background-color: #f5f7fa;
         margin: 0;
         padding: 0;
+        color: #333;
+        min-height: 100vh;
     }
-
-    @keyframes gradient {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
+    
     .container-center {
         min-height: 100vh;
         display: flex;
@@ -24,125 +20,251 @@
         justify-content: center;
         padding: 20px;
     }
-
-    .glass-card {
-        background: rgba(255, 255, 255, 0.25);
-        border-radius: 20px;
+    
+    .login-card {
+        background-color: white;
+        border-radius: 12px;
         padding: 40px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
         width: 100%;
-        max-width: 500px;
-        transition: transform 0.3s ease;
+        max-width: 420px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
     }
-
-    .glass-card:hover {
-        transform: scale(1.02);
+    
+    .login-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background-color: #555;
+        opacity: 0.8;
     }
-
+    
     .login-title {
-        text-align: center;
-        font-size: 2.2rem;
-        font-weight: bold;
+        text-align: left;
+        font-size: 26px;
+        font-weight: 600;
         margin-bottom: 30px;
-        color: #2f3640;
+        color: #333;
+        letter-spacing: -0.5px;
+        padding-left: 10px;
+        border-left: none;
+        position: relative;
     }
-
+    
+    .form-group {
+        margin-bottom: 28px;
+        position: relative;
+    }
+    
     .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
         font-weight: 500;
-        color: #2c3e50;
+        color: #555;
+        transition: all 0.2s ease;
     }
-
+    
     .form-control {
+        width: 100%;
+        padding: 12px 0;
         background: transparent;
         border: none;
-        border-bottom: 2px solid #ccc;
+        border-bottom: 1px solid #ddd;
         border-radius: 0;
-        color: #34495e;
-        font-weight: 500;
-        padding-left: 0;
+        font-size: 15px;
+        font-weight: 400;
+        color: #333;
+        transition: all 0.3s ease;
     }
-
+    
     .form-control:focus {
-        border-color: #00a8ff;
-        background-color: transparent;
+        outline: none;
+        border-color: #555;
         box-shadow: none;
     }
-
-    .btn-glow {
-        background: #fbc531;
-        color: white;
-        font-weight: bold;
-        border: none;
-        border-radius: 25px;
-        padding: 10px 30px;
-        transition: all 0.3s ease-in-out;
+    
+    .input-line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #555;
+        transition: all 0.3s ease;
     }
-
-    .btn-glow:hover {
-        background:rgb(225, 169, 0);
-        box-shadow: 0 0 15px rgba(225, 225, 0, 0.6);
-        transform: scale(1.05);
+    
+    .form-control:focus ~ .input-line {
+        width: 100%;
     }
-
+    
+    .form-check {
+        display: flex;
+        align-items: center;
+        padding-left: 0;
+    }
+    
+    .form-check-input {
+        margin-right: 8px;
+        cursor: pointer;
+    }
+    
     .form-check-label {
-        color: #2d3436;
+        font-size: 14px;
+        color: #666;
+        cursor: pointer;
     }
-
-    .text-muted:hover {
-        color: #009ae1;
+    
+    .btn-login {
+        background-color: #333;
+        color: white;
+        font-weight: 500;
+        border: none;
+        border-radius: 6px;
+        padding: 12px 24px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        cursor: pointer;
     }
-
+    
+    .btn-login:hover {
+        background-color: #222;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .forgot-password {
+        color: #666;
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+    
+    .forgot-password:hover {
+        color: #333;
+    }
+    
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+    
     .invalid-feedback {
-        color: #e74c3c;
-        font-size: 0.9rem;
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 5px;
+    }
+    
+    /* Custom checkboxes */
+    .custom-checkbox {
+        position: relative;
+        padding-left: 28px;
+        cursor: pointer;
+        user-select: none;
+    }
+    
+    .custom-checkbox input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+    
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 18px;
+        width: 18px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        transition: all 0.2s ease;
+    }
+    
+    .custom-checkbox:hover input ~ .checkmark {
+        border-color: #aaa;
+    }
+    
+    .custom-checkbox input:checked ~ .checkmark {
+        background-color: #555;
+        border-color: #555;
+    }
+    
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+    
+    .custom-checkbox input:checked ~ .checkmark:after {
+        display: block;
+    }
+    
+    .custom-checkbox .checkmark:after {
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
     }
 </style>
 
 <div class="container-center">
-    <div class="glass-card">
-        <div class="login-title">Connexion</div>
+    <div class="login-card">
+        <h2 class="login-title">Connexion</h2>
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <div class="mb-4">
+            <div class="form-group">
                 <label for="email" class="form-label">{{ __('Email Address') }}</label>
                 <input id="email" type="email"
                        class="form-control @error('email') is-invalid @enderror"
                        name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                <div class="input-line"></div>
                 @error('email')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
-            <div class="mb-4">
+            <div class="form-group">
                 <label for="password" class="form-label">{{ __('Password') }}</label>
                 <input id="password" type="password"
                        class="form-control @error('password') is-invalid @enderror"
                        name="password" required autocomplete="current-password">
+                <div class="input-line"></div>
                 @error('password')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="form-check mb-4">
-                <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                       {{ old('remember') ? 'checked' : '' }}>
-                <label class="form-check-label" for="remember">
+                <label class="custom-checkbox">
                     {{ __('Remember Me') }}
+                    <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                    <span class="checkmark"></span>
                 </label>
             </div>
 
-            <div class="d-flex justify-content-between align-items-center">
-                <button type="submit" class="btn btn-glow">
+            <div class="actions">
+                <button type="submit" class="btn-login">
                     {{ __('Login') }}
                 </button>
 
                 @if (Route::has('password.request'))
-                    <a class="text-decoration-none text-muted" href="{{ route('password.request') }}">
-                        {{ __('Forgot Your Password?') }}
+                    <a class="forgot-password" href="{{ route('password.request') }}">
+                        {{ __('Forgot Password?') }}
                     </a>
                 @endif
             </div>

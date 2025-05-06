@@ -18,15 +18,15 @@ class Project extends Model
     protected $fillable = [
         'name',
         'description',
-        'client_id',
+        'user_id',
     ];
 
     /**
-     * Relation avec le client
+     * Relation avec l'utilisateur propriétaire du projet
      */
-    public function client()
+    public function user()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(User::class);
     }
 
     /**

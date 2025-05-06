@@ -1,4 +1,4 @@
- @extends('layouts.app')
+@extends('layouts.app')
 
 @section('content')
 <style>
@@ -33,7 +33,7 @@
         backdrop-filter: blur(15px);
         border: 1px solid rgba(255, 255, 255, 0.3);
         width: 100%;
-        max-width: 500px;
+        max-width: 600px;
         transition: transform 0.3s ease;
     }
 
@@ -54,7 +54,7 @@
         color: #2c3e50;
     }
 
-    .form-control {
+    .form-control, .form-select {
         background: transparent;
         border: none;
         border-bottom: 2px solid #ccc;
@@ -64,7 +64,7 @@
         padding-left: 0;
     }
 
-    .form-control:focus {
+    .form-control:focus, .form-select:focus {
         border-color: #00a8ff;
         background-color: transparent;
         box-shadow: none;
@@ -105,14 +105,37 @@
 
             <div class="mb-4">
                 <label for="priority" class="form-label">Priorité</label>
-                <select name="priority" id="priority" class="form-control" required>
+                <select name="priority" id="priority" class="form-select" required>
                     <option value="low">Faible</option>
                     <option value="medium">Moyenne</option>
                     <option value="high">Élevée</option>
                 </select>
             </div>
 
-            <div class="d-flex justify-content-center">
+            <div class="mb-4">
+                <label for="project_id" class="form-label">Projet</label>
+                <select name="project_id" id="project_id" class="form-select">
+                    <option value="">Sélectionner un projet</option>
+                    @foreach (App\Models\Project::where('user_id', auth()->id())->get() as $project)
+                        <option value="{{ $project->id }}" {{ isset($project_id) && $project_id == $project->id ? 'selected' : '' }}>
+                            {{ $project->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="assigned_to" class="form-label">Assigner à</label>
+                <select name="assigned_to" id="assigned_to" class="form-select">
+                    <option value="">Non assigné</option>
+                    @foreach (App\Models\User::all() as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Retour</a>
                 <button type="submit" class="btn btn-glow">Soumettre</button>
             </div>
         </form>
